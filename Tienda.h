@@ -22,7 +22,8 @@ public:
 
     void cargarCatalogo();
     void listarAutopartes();
-    void agregarAlCarrito(const std::string& codigo);
+    void agregarAlCarrito(const int& codigo);
+    void mostrarCarrito();
     void finalizarCompra();
 
 };
