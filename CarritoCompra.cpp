@@ -18,7 +18,7 @@ void CarritoCompra::agregarAutoparte(const Autoparte& p) {
     productos.push_back(p);
 }
 
-double CarritoCompra::calculaTotal() {
+double CarritoCompra::calcularTotal() {
     double total = 0.0;
     for (const auto& p : productos) {
         total += p.getPrecio();
