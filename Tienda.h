@@ -25,6 +25,7 @@ public:
     void agregarAlCarrito(const int& codigo);
     void mostrarCarrito();
     void finalizarCompra();
+    void menu();
 
 };
 
