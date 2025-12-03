@@ -5,20 +5,29 @@
 #include "Tienda.h"
 #include <fstream>
 #include <iostream>
+#include <sstream>
 
 void Tienda::cargarCatalogo() {
-    std::string nombre;
-    int codigo;
-    double precio;
-
-    std::ifstream inputFile(catalogo.txt);
+    std::ifstream inputFile("catalogo.csv");
 
     if (inputFile) {
 
-        std::cout << "El catalogo ha sido importado de manera exitosa!! \n";
+        std::string line;
+        while (std::getline(inputFile, line)) {
+            std::stringstream ss(line);
+            std::string nombre;
+            std::string codigoS;
+            std::string precioS;
 
-        while(inputFile >> nombre >> codigo >> precio) {
-            catalogo.emplace_back(nombre, codigo, precio);
+            std::getline(ss, nombre, ',');
+            std::getline(ss, codigoS, ',');
+            std::getline(ss, precioS, ',');
+
+            int codigo = std::stoi(codigoS);
+            double precio = std::stod(precioS);
+
+            Autoparte p(nombre, codigo, precio);
+            catalogo.push_back(p);
         }
 
     } else {
@@ -28,22 +37,27 @@ void Tienda::cargarCatalogo() {
 
 void Tienda::listarAutopartes() {
 
-    for (const auto& e : catalogo) {
-        std::cout << e.getNombre() << "\n";
+    for (const auto& p : catalogo) {
+        std::cout << p.getNombre() << " " << p.getCodigo() <<"\n";
     }
 }
 
-void Tienda::agregarAlCarrito(const std::string& codigo) {
+void Tienda::agregarAlCarrito(const int& codigo) {
     for (const auto& e :  catalogo) {
-        if (e.codigo == codigo) {
+        if (e.getCodigo() == codigo) {
             carrito.agregarAutoparte(e);
+            std::cout << e.getNombre() << " ha sido agregado al carrito! \n";
         }
     }
+}
+
+void Tienda::mostrarCarrito() {
+    carrito.mostrarCarrito();
 }
 
 void Tienda::finalizarCompra() {
     std::cout << "Ticket de compra: \n";
 
-    carrito.mostrarCarrrito();
+    carrito.mostrarCarrito();
     std::cout << "El total de su compra es de: " << carrito.calcularTotal();
 }
