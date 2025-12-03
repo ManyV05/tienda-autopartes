@@ -10,7 +10,7 @@ Autoparte::Autoparte()  {
     this->precio=00.0;
 };
 
-Autoparte::Autoparte(const string& cNombre, int &cCodigo, double &cPrecio){
+Autoparte::Autoparte(const string& cNombre, int& cCodigo, double& cPrecio){
     this->nombre=cNombre;
     this->codigo=cCodigo;
     this->precio=cPrecio;
