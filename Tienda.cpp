@@ -61,3 +61,58 @@ void Tienda::finalizarCompra() {
     carrito.mostrarCarrito();
     std::cout << "El total de su compra es de: " << carrito.calcularTotal();
 }
+
+void Tienda::menu() {
+    int opcion;
+
+    do {
+        cout << "\n";
+        cout << "╔══════════════════════════════════════════════╗\n";
+        cout << "║        ⚡          Autozone             ⚡     ║\n";
+        cout << "╠══════════════════════════════════════════════╣\n";
+        cout << "║  1 ┇ Cargar Catalogo                         ║\n";
+        cout << "║  2 ┇ Listar Autopartes                       ║\n";
+        cout << "║  3 ┇ Agregar al Carrito                      ║\n";
+        cout << "║  4 ┇ Mostrar Carrito                         ║\n";
+        cout << "║  5 ┇ Finalizar Compra                        ║\n";
+        cout << "║  6 ┇ Salir                                   ║\n";
+        cout << "╚══════════════════════════════════════════════╝\n";
+        cout << "► Opción: ";
+        cin >> opcion;
+
+        switch (opcion) {
+            case 1:
+                cargarCatalogo();
+                break;
+
+            case 2:
+                listarAutopartes();
+                break;
+
+            case 3: {
+                int codigo;
+                cout << "Ingrese el código de la autoparte a agregar: ";
+                cin >> codigo;
+                agregarAlCarrito(codigo);
+                break;
+            }
+
+            case 4:
+                mostrarCarrito();
+                break;
+
+            case 5:
+                finalizarCompra();
+                break;
+
+            case 6:
+                cout << "Saliendo del sistema...\n";
+                break;
+
+            default:
+                cout << "Opción no válida, intente de nuevo.\n";
+                break;
+        }
+
+    } while (opcion != 6);
+}
