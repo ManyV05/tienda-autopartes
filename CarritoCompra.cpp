@@ -15,7 +15,6 @@ CarritoCompra::CarritoCompra(vector<Autoparte> &cProductos) {
     this->productos = cProductos;
 }
 void CarritoCompra::agregarAutoparte(const Autoparte& p) {
-    Autoparte nueva(const string& cNombre, int &cCodigo, double &cPrecio);
     productos.push_back(p);
 }
 
@@ -28,17 +27,11 @@ double CarritoCompra::calculaTotal() {
 }
 
 void CarritoCompra::mostrarCarrito() {
-    cout << "Productos: " << endl;
+
     for (const auto& p : productos) {
-        cout << p.getNombre() << endl;
+        cout << "Producto: " << p.getNombre() << "\n";
+        cout << "Precio: " << p.getPrecio() << "\n";
     }
-    cout << "Codigo: " << endl;
-    for (const auto& p : productos) {
-        cout << p.getCodigo() << endl;
-    }
-    cout << "Precio: " << endl;
-    for (const auto& p : productos) {
-        cout << p.getPrecio() << endl;
-    }
+
 }
 
