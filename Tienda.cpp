@@ -67,17 +67,18 @@ void Tienda::menu() {
 
     do {
         cout << "\n";
-        cout << "╔══════════════════════════════════════════════╗\n";
-        cout << "║        ⚡          Autozone             ⚡     ║\n";
-        cout << "╠══════════════════════════════════════════════╣\n";
-        cout << "║  1 ┇ Cargar Catalogo                         ║\n";
-        cout << "║  2 ┇ Listar Autopartes                       ║\n";
-        cout << "║  3 ┇ Agregar al Carrito                      ║\n";
-        cout << "║  4 ┇ Mostrar Carrito                         ║\n";
-        cout << "║  5 ┇ Finalizar Compra                        ║\n";
-        cout << "║  6 ┇ Salir                                   ║\n";
-        cout << "╚══════════════════════════════════════════════╝\n";
-        cout << "► Opción: ";
+        cout << "==============================================\n";
+        cout << "                AUTOZONE STORE                \n";
+        cout << "==============================================\n";
+        cout << "  1 | Cargar Catalogo\n";
+        cout << "  2 | Listar Autopartes\n";
+        cout << "  3 | Agregar al Carrito\n";
+        cout << "  4 | Mostrar Carrito\n";
+        cout << "  5 | Finalizar Compra\n";
+        cout << "  6 | Salir\n";
+        cout << "==============================================\n";
+        cout << "-> Opcion: ";
+
         cin >> opcion;
 
         switch (opcion) {
@@ -91,7 +92,7 @@ void Tienda::menu() {
 
             case 3: {
                 int codigo;
-                cout << "Ingrese el código de la autoparte a agregar: ";
+                cout << "Ingrese el codigo de la autoparte a agregar: ";
                 cin >> codigo;
                 agregarAlCarrito(codigo);
                 break;
@@ -110,7 +111,7 @@ void Tienda::menu() {
                 break;
 
             default:
-                cout << "Opción no válida, intente de nuevo.\n";
+                cout << "Opción no valida, intente de nuevo.\n";
                 break;
         }
 
