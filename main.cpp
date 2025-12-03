@@ -10,13 +10,16 @@
 int main() {
 
     Tienda autozone;
+    autozone.menu();
 
-    autozone.cargarCatalogo();
-
-    autozone.listarAutopartes();
-
-    autozone.mostrarCarrito();
 
 
     return 0;
 }
+
+
+// autozone.cargarCatalogo();
+//
+// autozone.listarAutopartes();
+//
+// autozone.mostrarCarrito();
