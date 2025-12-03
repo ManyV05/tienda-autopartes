@@ -1,0 +1,7 @@
+Nombre_Autoparte,Codigo_Producto,Precio
+Filtro de Aceite Sintético,5453,185.00
+Pastillas de Freno Cerámicas,8767,650.50
+Amortiguador Delantero,0896,1250.00
+Alternador 12V Universal,1234,2890.00
+Batería Ácido-Plomo 60Ah,6453,2100.00
+Bujía de Iridio,7546,120.00
