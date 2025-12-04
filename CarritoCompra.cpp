@@ -20,6 +20,7 @@ CarritoCompra::CarritoCompra(vector<Autoparte> &cProductos) {
 void CarritoCompra::agregarAutoparte(const Autoparte& p) {
     productos.push_back(p);
 }
+
 void CarritoCompra::eliminarAutoparte(int &codigo) {
     auto it=std::remove_if(
         productos.begin(),
