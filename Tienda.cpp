@@ -39,8 +39,13 @@ void Tienda::cargarCatalogo() {
 
 void Tienda::listarAutopartes() {
 
-    for (const auto& p : catalogo) {
-        std::cout << p.getNombre() << " " << p.getCodigo() <<"\n";
+    if (catalogo.size() == 0) {
+        std::cout << "El catalogo esta vacio o no ha sido importado aun! \n";
+    }
+    else {
+        for (const auto &p: catalogo) {
+            std::cout << p.getNombre() << " " << p.getCodigo() << "\n";
+        }
     }
 }
 

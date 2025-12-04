@@ -42,10 +42,14 @@ double CarritoCompra::calcularTotal() {
 
 void CarritoCompra::mostrarCarrito() {
 
-    for (const auto& p : productos) {
-        cout << "Producto: " << p.getNombre() << "\n"<<"Codigo: "<< p.getCodigo() << "\n";
-        cout << "Precio: " << p.getPrecio() << "\n";
+    if (productos.size() == 0) {
+        std::cout << "El carrito esta vacio. \n";
     }
-
+    else {
+        for (const auto& p : productos) {
+            cout << "Producto: " << p.getNombre() << "\n" << "Codigo: " << p.getCodigo() << "\n";
+            cout << "Precio: " << p.getPrecio() << "\n";
+        }
+    }
 }
 
