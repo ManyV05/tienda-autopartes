@@ -156,10 +156,28 @@ void Tienda::menu() {
                 break;
 
             case 3: {
-                int codigo;
-                cout << "Ingresa el codigo de autoparte: ";
-                cin >> codigo;
-                agregarAlCarrito(codigo);
+                string textoInput; //el input sera manejado en string para manejar errores.
+                cout << "Ingresa el codigo de la autoparte que desea agregar al carrito: \n";
+                cin >> textoInput;
+
+                /*
+                Declaramos una variable bool, la cual nos servira despues para dar luz verde para convertir
+                el input tipo string a int sin que haya errores. esNumero sera verdadero si el input son solo numeros,
+                y sera falso si el input contiene caracteres que no son numeros.
+                */
+                bool esNumero = true;
+                for (char c : textoInput) {
+                    if (!isdigit(c)) {
+                        esNumero = false;
+                    }
+                }
+
+                if (esNumero) {
+                    int codigo = stoi(textoInput); // convertimos el string a intgeer. (stoi)
+                    agregarAlCarrito(codigo);
+                } else {
+                    cout << "Error: Favor de ingresar un codigo valido!\n";
+                }
                 break;
             }
 
