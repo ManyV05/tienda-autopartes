@@ -9,7 +9,13 @@
 int main() {
 
     Tienda autozone;
-    autozone.menu();
+
+    autozone.cargarCatalogo();
+
+    autozone.listarAutopartes();
+
+    autozone.mostrarCarrito();
+
 
     return 0;
 }
