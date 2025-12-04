@@ -52,24 +52,32 @@ void Tienda::listarAutopartes() {
 }
 
 void Tienda::agregarAlCarrito(int codigo) {
-    auto it = std::find_if(
-        catalogo.begin(),
-        catalogo.end(),
-        [codigo](const Autoparte& p) {
-            return p.getCodigo() == codigo;
+        int indice_encontrado = -1; //Inicializa indice en -1
+
+
+        for (size_t i = 0; i < catalogo.size(); ++i) { //ciclo for que itera del indice 0 al ultimo del vector
+            if (catalogo[i].getCodigo() == codigo) { //verifica si el codigo del objeto es igual al codigo que el usuario escribio
+                indice_encontrado = i;  //se guardara el indice donde este el codigo si este es encontrado
+                break; // Detiene la búsqueda tan pronto como se encuentre el código
+            }
         }
-    );
 
-    if (it != catalogo.end()) {
-        std::cout << it->getNombre() << " ha sido agregado al carrito! \n";
 
-        carrito.agregarAutoparte(*it);
+        if (indice_encontrado != -1) { //Si se encontro un indice este sera diferente a -1 y sera true
 
-        catalogo.erase(it);
-    } else {
-        std::cout << "Error: Autoparte con codigo " << codigo << " no encontrada en el catalogo. \n";
+            const Autoparte& autoparte_encontrada = catalogo[indice_encontrado];// Se guarda la referencia del objeto antes de que se elimine del catalogo
+
+            std::cout << autoparte_encontrada.getNombre() << " ha sido agregado al carrito! \n"; //Se imprime el nombre para comprobar
+
+
+            carrito.agregarAutoparte(autoparte_encontrada); //agrega la autoparte al carrito
+
+            catalogo.erase(catalogo.begin() + indice_encontrado); //se usa erase y se calcula la posicion sumando el inicio del vector con el indice que se encontro
+
+        } else {
+            std::cout << "Error: Autoparte con codigo " << codigo << " no encontrada en el catalogo. \n"; //Si no se encontro la autoparte se imprime un error
+        }
     }
-}
 
 void Tienda::eliminarAutoparte(int &codigo) {
     auto it=std::remove_if(
