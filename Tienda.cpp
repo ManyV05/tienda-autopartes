@@ -202,7 +202,7 @@ void Tienda::menu() {
                 }
 
             case 6:
-                cout << "\nSaliendo del sistema...Gracias por su compra\n";
+                cout << "\nSaliendo del sistema...Gracias por contar con nosotros!\n";
                 return;     // ← sale de la función Y del menú
         }
     }
