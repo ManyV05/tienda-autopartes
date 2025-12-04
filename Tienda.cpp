@@ -3,12 +3,16 @@
 //
 
 #include "Tienda.h"
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <sstream>
 
 void Tienda::cargarCatalogo() {
+    catalogo.clear();
+    carrito.vaciarCarrito();
     std::ifstream inputFile("catalogo.csv");
+    cout << "El catalogo ha sido cargado: " << endl;
 
     if (inputFile) {
 
@@ -37,34 +41,65 @@ void Tienda::cargarCatalogo() {
 
 void Tienda::listarAutopartes() {
 
-    for (const auto& p : catalogo) {
-        std::cout << p.getNombre() << " " << p.getCodigo() <<"\n";
+    if (catalogo.size() == 0) {
+        std::cout << "El catalogo esta vacio o no ha sido importado aun! \n";
     }
-}
-
-void Tienda::agregarAlCarrito(const int& codigo) {
-    for (const auto& e :  catalogo) {
-        if (e.getCodigo() == codigo) {
-            carrito.agregarAutoparte(e);
-            std::cout << e.getNombre() << " ha sido agregado al carrito! \n";
+    else {
+        for (const auto &p: catalogo) {
+            std::cout << p.getNombre() << " " << p.getCodigo() << "\n";
         }
     }
 }
+
+void Tienda::agregarAlCarrito(int codigo) {
+        int indice_encontrado = -1; //Inicializa indice en -1
+
+
+        for (size_t i = 0; i < catalogo.size(); ++i) { //ciclo for que itera del indice 0 al ultimo del vector
+            if (catalogo[i].getCodigo() == codigo) { //verifica si el codigo del objeto es igual al codigo que el usuario escribio
+                indice_encontrado = i;  //se guardara el indice donde este el codigo si este es encontrado
+                break; // Detiene la búsqueda tan pronto como se encuentre el código
+            }
+        }
+
+
+        if (indice_encontrado != -1) { //Si se encontro un indice este sera diferente a -1 y sera true
+
+            const Autoparte& autoparte_encontrada = catalogo[indice_encontrado];// Se guarda la referencia del objeto antes de que se elimine del catalogo
+
+            std::cout << autoparte_encontrada.getNombre() << " ha sido agregado al carrito! \n"; //Se imprime el nombre para comprobar
+
+
+            carrito.agregarAutoparte(autoparte_encontrada); //agrega la autoparte al carrito
+
+            catalogo.erase(catalogo.begin() + indice_encontrado); //se usa erase y se calcula la posicion sumando el inicio del vector con el indice que se encontro
+
+        } else {
+            std::cout << "Error: Autoparte con codigo " << codigo << " no encontrada en el catalogo. \n"; //Si no se encontro la autoparte se imprime un error
+        }
+    }
 
 void Tienda::mostrarCarrito() {
     carrito.mostrarCarrito();
 }
 
-void Tienda::finalizarCompra() {
-    std::cout << "Ticket de compra: \n";
+bool Tienda::finalizarCompra() {
 
-    carrito.mostrarCarrito();
-    std::cout << "El total de su compra es de: " << carrito.calcularTotal();
+    if (carrito.calcularTotal() == 0) {
+        std::cout << "El carrito esta vacio, favor de agregar productos para poder realizar alguna compra. \n";
+        return false;
+    }
+    else {
+        std::cout << "Ticket de compra: \n";
+        carrito.mostrarCarrito();
+        std::cout << "El total de su compra es de: " << carrito.calcularTotal() << "\n";
+        return true;
+    }
 }
 
 void Tienda::menu() {
 
-    while (true) {          // ← el menú se repite hasta "salir"
+    while (true) {  // el menú se repite hasta que se seleccione la opcion 6 que es salir de la tienda
         string input;
         int opcion;
 
@@ -99,13 +134,12 @@ void Tienda::menu() {
         // Convertimos el único caracter a número
         opcion = input[0] - '0';
 
-        // Validación 3: rango
+        // Validación 3: rango de numeros
         if (opcion < 1 || opcion > 6) {
             cout << "Error: Opcion invalida.\n";
             continue;
         }
 
-        // Ya es válido: ejecutar
         switch (opcion) {
             case 1:
                 cargarCatalogo();
@@ -116,10 +150,28 @@ void Tienda::menu() {
                 break;
 
             case 3: {
-                int codigo;
-                cout << "Ingresa el código de autoparte: ";
-                cin >> codigo;
-                agregarAlCarrito(codigo);
+                string textoInput; //el input sera manejado en string para manejar errores.
+                cout << "Ingresa el codigo de la autoparte que desea agregar al carrito: \n";
+                cin >> textoInput;
+
+                /*
+                Declaramos una variable bool, la cual nos servira despues para dar luz verde para convertir
+                el input tipo string a int sin que haya errores. esNumero sera verdadero si el input son solo numeros,
+                y sera falso si el input contiene caracteres que no son numeros.
+                */
+                bool esNumero = true;
+                for (char c : textoInput) {
+                    if (!isdigit(c)) {
+                        esNumero = false;
+                    }
+                }
+
+                if (esNumero) {
+                    int codigo = stoi(textoInput); // convertimos el string a intgeer. (stoi)
+                    agregarAlCarrito(codigo);
+                } else {
+                    cout << "Error: Favor de ingresar un codigo valido!\n";
+                }
                 break;
             }
 
@@ -128,11 +180,15 @@ void Tienda::menu() {
                 break;
 
             case 5:
-                finalizarCompra();
-                break;
+                if (finalizarCompra()) {
+                    cout << "\nSaliendo del sistema...Gracias por su compra\n";
+                    return;     // ← sale de la función Y del menú
+                } else {
+                    break;
+                }
 
             case 6:
-                cout << "\nSaliendo del sistema... ¡Gracias por su compra!\n";
+                cout << "\nSaliendo del sistema...Gracias por contar con nosotros!\n";
                 return;     // ← sale de la función Y del menú
         }
     }
