@@ -21,17 +21,6 @@ void CarritoCompra::agregarAutoparte(const Autoparte& p) {
     productos.push_back(p);
 }
 
-void CarritoCompra::eliminarAutoparte(int &codigo) {
-    auto it=std::remove_if(
-        productos.begin(),
-        productos.end(),
-        [codigo](const Autoparte& p) {
-            return (p.getCodigo() == codigo);
-        }
-    );
-    productos.erase(it, productos.end());
-}
-
 double CarritoCompra::calcularTotal() {
     double total = 0.0;
     for (const auto& p : productos) {
