@@ -3,6 +3,8 @@
 //
 
 #include "Tienda.h"
+
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -42,13 +44,34 @@ void Tienda::listarAutopartes() {
     }
 }
 
-void Tienda::agregarAlCarrito(const int& codigo) {
-    for (const auto& e :  catalogo) {
-        if (e.getCodigo() == codigo) {
-            carrito.agregarAutoparte(e);
-            std::cout << e.getNombre() << " ha sido agregado al carrito! \n";
+void Tienda::agregarAlCarrito(int codigo) {
+    auto it = std::find_if(
+        catalogo.begin(),
+        catalogo.end(),
+        [codigo](const Autoparte& p) {
+            return p.getCodigo() == codigo;
         }
+    );
+
+    if (it != catalogo.end()) {
+        std::cout << it->getNombre() << " ha sido agregado al carrito! \n";
+
+        carrito.agregarAutoparte(*it);
+
+        catalogo.erase(it);
+    } else {
+        std::cout << "Error: Autoparte con codigo " << codigo << " no encontrada en el catalogo. \n";
     }
+}
+void Tienda::eliminarAutoparte(int &codigo) {
+    auto it=std::remove_if(
+        catalogo.begin(),
+        catalogo.end(),
+        [codigo](const Autoparte& p) {
+            return (p.getCodigo() == codigo);
+        }
+    );
+    catalogo.erase(it, catalogo.end());
 }
 
 void Tienda::mostrarCarrito() {
@@ -58,9 +81,23 @@ void Tienda::mostrarCarrito() {
 void Tienda::finalizarCompra() {
     std::cout << "Ticket de compra: \n";
 
+
     carrito.mostrarCarrito();
     std::cout << "El total de su compra es de: " << carrito.calcularTotal();
 }
+
+void Tienda::eliminarProductoCarrito(int codigo) {
+    for (const auto& e :  catalogo) {
+        if (e.getCodigo() == codigo) {
+            carrito.eliminarAutoparte(codigo);
+            catalogo.push_back(e);
+            std::cout << e.getNombre() << " ha sido eliminado del carrito! \n";
+        }
+    }
+}
+
+
+
 
 void Tienda::menu() {
 
@@ -117,7 +154,7 @@ void Tienda::menu() {
 
             case 3: {
                 int codigo;
-                cout << "Ingresa el código de autoparte: ";
+                cout << "Ingresa el codigo de autoparte: ";
                 cin >> codigo;
                 agregarAlCarrito(codigo);
                 break;

@@ -16,6 +16,7 @@ public:
     CarritoCompra();
     explicit CarritoCompra(vector<Autoparte> &productos);
     void agregarAutoparte(const Autoparte& p);
+    void eliminarAutoparte(int &codigo);
     double calcularTotal();
     void mostrarCarrito();
 };

@@ -3,6 +3,9 @@
 //
 
 #include "CarritoCompra.h"
+
+#include <algorithm>
+
 #include "Autoparte.h"
 #include <iostream>
 #include <ostream>
@@ -17,6 +20,16 @@ CarritoCompra::CarritoCompra(vector<Autoparte> &cProductos) {
 void CarritoCompra::agregarAutoparte(const Autoparte& p) {
     productos.push_back(p);
 }
+void CarritoCompra::eliminarAutoparte(int &codigo) {
+    auto it=std::remove_if(
+        productos.begin(),
+        productos.end(),
+        [codigo](const Autoparte& p) {
+            return (p.getCodigo() == codigo);
+        }
+    );
+    productos.erase(it, productos.end());
+}
 
 double CarritoCompra::calcularTotal() {
     double total = 0.0;
@@ -29,7 +42,7 @@ double CarritoCompra::calcularTotal() {
 void CarritoCompra::mostrarCarrito() {
 
     for (const auto& p : productos) {
-        cout << "Producto: " << p.getNombre() << "\n";
+        cout << "Producto: " << p.getNombre() << "\n"<<"Codigo: "<< p.getCodigo() << "\n";
         cout << "Precio: " << p.getPrecio() << "\n";
     }
 
