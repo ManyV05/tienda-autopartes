@@ -3,7 +3,6 @@
 //
 
 #include "Tienda.h"
-
 #include <algorithm>
 #include <fstream>
 #include <iostream>
@@ -11,6 +10,7 @@
 
 void Tienda::cargarCatalogo() {
     std::ifstream inputFile("catalogo.csv");
+    cout << "El catalogo ha sido cargado: " << endl;
 
     if (inputFile) {
 
@@ -63,6 +63,7 @@ void Tienda::agregarAlCarrito(int codigo) {
         std::cout << "Error: Autoparte con codigo " << codigo << " no encontrada en el catalogo. \n";
     }
 }
+
 void Tienda::eliminarAutoparte(int &codigo) {
     auto it=std::remove_if(
         catalogo.begin(),
@@ -96,12 +97,9 @@ void Tienda::eliminarProductoCarrito(int codigo) {
     }
 }
 
-
-
-
 void Tienda::menu() {
 
-    while (true) {          // ← el menú se repite hasta "salir"
+    while (true) {  // el menú se repite hasta que se seleccione la opcion 6 que es salir de la tienda
         string input;
         int opcion;
 
@@ -166,10 +164,9 @@ void Tienda::menu() {
 
             case 5:
                 finalizarCompra();
-                break;
 
             case 6:
-                cout << "\nSaliendo del sistema... ¡Gracias por su compra!\n";
+                cout << "\nSaliendo del sistema...Gracias por su compra\n";
                 return;     // ← sale de la función Y del menú
         }
     }
