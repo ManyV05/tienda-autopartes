@@ -86,12 +86,18 @@ void Tienda::mostrarCarrito() {
     carrito.mostrarCarrito();
 }
 
-void Tienda::finalizarCompra() {
-    std::cout << "Ticket de compra: \n";
+bool Tienda::finalizarCompra() {
 
-
-    carrito.mostrarCarrito();
-    std::cout << "El total de su compra es de: " << carrito.calcularTotal();
+    if (carrito.calcularTotal() == 0) {
+        std::cout << "El carrito esta vacio, favor de agregar productos para poder realizar alguna compra. \n";
+        return false;
+    }
+    else {
+        std::cout << "Ticket de compra: \n";
+        carrito.mostrarCarrito();
+        std::cout << "El total de su compra es de: " << carrito.calcularTotal() << "\n";
+        return true;
+    }
 }
 
 void Tienda::eliminarProductoCarrito(int codigo) {
@@ -188,7 +194,12 @@ void Tienda::menu() {
                 break;
 
             case 5:
-                finalizarCompra();
+                if (finalizarCompra()) {
+                    cout << "\nSaliendo del sistema...Gracias por su compra\n";
+                    return;     // ← sale de la función Y del menú
+                } else {
+                    break;
+                }
 
             case 6:
                 cout << "\nSaliendo del sistema...Gracias por su compra\n";

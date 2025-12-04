@@ -26,7 +26,7 @@ public:
     void eliminarAutoparte(int &codigo);
     void eliminarProductoCarrito(int codigo);
     void mostrarCarrito();
-    void finalizarCompra();
+    bool finalizarCompra();
     void menu();
 
 };
