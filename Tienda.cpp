@@ -9,6 +9,7 @@
 #include <sstream>
 
 void Tienda::cargarCatalogo() {
+    catalogo.clear();
     std::ifstream inputFile("catalogo.csv");
     cout << "El catalogo ha sido cargado: " << endl;
 
