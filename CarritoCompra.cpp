@@ -8,12 +8,6 @@
 #include <ostream>
 #include <vector>
 
-CarritoCompra::CarritoCompra() {
-    this->productos;
-}
-CarritoCompra::CarritoCompra(vector<Autoparte> &cProductos) {
-    this->productos = cProductos;
-}
 void CarritoCompra::agregarAutoparte(const Autoparte& p) {
     productos.push_back(p);
 }
