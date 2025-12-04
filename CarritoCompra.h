@@ -19,6 +19,7 @@ public:
     void eliminarAutoparte(int &codigo);
     double calcularTotal();
     void mostrarCarrito();
+    void vaciarCarrito();
 };
 
 #endif //PROYECTO_C___CARRITOCOMPRA_H

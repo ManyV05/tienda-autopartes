@@ -53,3 +53,7 @@ void CarritoCompra::mostrarCarrito() {
     }
 }
 
+void CarritoCompra::vaciarCarrito() {
+    productos.clear();
+}
+
