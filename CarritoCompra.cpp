@@ -3,9 +3,6 @@
 //
 
 #include "CarritoCompra.h"
-
-#include <algorithm>
-
 #include "Autoparte.h"
 #include <iostream>
 #include <ostream>
