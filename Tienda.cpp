@@ -79,17 +79,6 @@ void Tienda::agregarAlCarrito(int codigo) {
         }
     }
 
-void Tienda::eliminarAutoparte(int &codigo) {
-    auto it=std::remove_if(
-        catalogo.begin(),
-        catalogo.end(),
-        [codigo](const Autoparte& p) {
-            return (p.getCodigo() == codigo);
-        }
-    );
-    catalogo.erase(it, catalogo.end());
-}
-
 void Tienda::mostrarCarrito() {
     carrito.mostrarCarrito();
 }
@@ -105,16 +94,6 @@ bool Tienda::finalizarCompra() {
         carrito.mostrarCarrito();
         std::cout << "El total de su compra es de: " << carrito.calcularTotal() << "\n";
         return true;
-    }
-}
-
-void Tienda::eliminarProductoCarrito(int codigo) {
-    for (const auto& e :  catalogo) {
-        if (e.getCodigo() == codigo) {
-            carrito.eliminarAutoparte(codigo);
-            catalogo.push_back(e);
-            std::cout << e.getNombre() << " ha sido eliminado del carrito! \n";
-        }
     }
 }
 
@@ -155,13 +134,12 @@ void Tienda::menu() {
         // Convertimos el único caracter a número
         opcion = input[0] - '0';
 
-        // Validación 3: rango
+        // Validación 3: rango de numeros
         if (opcion < 1 || opcion > 6) {
             cout << "Error: Opcion invalida.\n";
             continue;
         }
 
-        // Ya es válido: ejecutar
         switch (opcion) {
             case 1:
                 cargarCatalogo();
