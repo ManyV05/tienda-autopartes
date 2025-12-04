@@ -63,9 +63,11 @@ void Tienda::finalizarCompra() {
 }
 
 void Tienda::menu() {
-    int opcion;
 
-    do {
+    while (true) {          // ← el menú se repite hasta "salir"
+        string input;
+        int opcion;
+
         cout << "\n";
         cout << "==============================================\n";
         cout << "                AUTOZONE STORE                \n";
@@ -79,8 +81,31 @@ void Tienda::menu() {
         cout << "==============================================\n";
         cout << "-> Opcion: ";
 
-        cin >> opcion;
 
+        cin >> input;
+
+        // Validación 1: tamaño
+        if (input.size() != 1) {
+            cout << "Error: Opcion invalida.\n";
+            continue;
+        }
+
+        // Validación 2: dígito
+        if (!isdigit(input[0])) {
+            cout << "Error: Solo se permiten numeros.\n";
+            continue;
+        }
+
+        // Convertimos el único caracter a número
+        opcion = input[0] - '0';
+
+        // Validación 3: rango
+        if (opcion < 1 || opcion > 6) {
+            cout << "Error: Opcion invalida.\n";
+            continue;
+        }
+
+        // Ya es válido: ejecutar
         switch (opcion) {
             case 1:
                 cargarCatalogo();
@@ -92,7 +117,7 @@ void Tienda::menu() {
 
             case 3: {
                 int codigo;
-                cout << "Ingrese el codigo de la autoparte a agregar: ";
+                cout << "Ingresa el código de autoparte: ";
                 cin >> codigo;
                 agregarAlCarrito(codigo);
                 break;
@@ -107,13 +132,8 @@ void Tienda::menu() {
                 break;
 
             case 6:
-                cout << "Saliendo del sistema...\n";
-                break;
-
-            default:
-                cout << "Opción no valida, intente de nuevo.\n";
-                break;
+                cout << "\nSaliendo del sistema... ¡Gracias por su compra!\n";
+                return;     // ← sale de la función Y del menú
         }
-
-    } while (opcion != 6);
+    }
 }
